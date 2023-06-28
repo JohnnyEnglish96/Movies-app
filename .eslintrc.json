@@ -1,0 +1,62 @@
+{
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "ignorePatterns": ["node_modules", "dist", "build"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/jsx-runtime",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": ["react", "import", "prettier"],
+    "rules": {
+      "indent": ["error", 2],
+      "prettier/prettier": ["error", { "endOfLine":"auto" }],
+      "linebreak-style": [0, "unix"],
+      "quotes": ["error", "single"],
+      "semi": ["error", "always"],
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": 0,
+      "no-param-reassign": ["error", { "props": false }],
+      "no-plusplus": 0,
+      "react/forbid-prop-types": [0, { "forbid": ["any", "array", "object"], "checkContextTypes": false, "checkChildContextTypes": false }],
+      "import/no-unresolved": [2, { "caseSensitive": false }],
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "import/order": [
+        2,
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "newlines-between": "always"
+        }
+      ]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"],
+          "moduleDirectory": ["node_modules", "src/"]
+        }
+      }
+    }
+  }

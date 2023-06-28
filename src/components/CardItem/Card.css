@@ -1,0 +1,40 @@
+.link {
+    color: black !important;
+    font-size: 13px;
+}
+.text {
+    display: block;
+    margin-top: 10px;
+    text-overflow: ellipsis;
+}
+.title {
+    margin: 0 !important;
+    padding-bottom: 5px;
+}
+.secondary {
+    margin-bottom: 5px !important;
+    display: block;
+}
+.card div:first-child {
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    height: 100%;
+    align-items: flex-start;
+}
+.ant-image-img {
+    object-fit: cover !important;
+    height: inherit !important;
+}
+.ant-image {
+    height: 100% !important;
+}
+.content {
+    padding: 20px !important;
+}
+.space div:last-child {
+    padding: 10px;
+}
+.ant-image-mask-info {
+    align-items: center !important;
+    display: flex !important;
+}
