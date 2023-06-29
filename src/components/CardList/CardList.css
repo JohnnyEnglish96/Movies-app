@@ -1,19 +1,19 @@
 .cardList {
-    margin: 0 auto;
-    width: calc(100% - 200px);
+  margin: 0 auto;
+  width: calc(100% - 200px);
 }
 
 .errorStatus {
-    width: 70%;
-    margin: 0 auto;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .loadingStatus {
-    width: 100%;
-    margin: 20px 0;
-    margin-bottom: 20px;
-    padding: 30px 50px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+  width: 100%;
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
 }
