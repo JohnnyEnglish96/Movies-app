@@ -5,12 +5,32 @@
   margin: 0;
   padding: 0;
 }
+
 body {
-  background-color: antiquewhite;
+  background-color:bisque;
 }
+
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
   margin: 0 auto;
   width: 80%;
-  background-color: white;
-  padding: 20px;
+  background-color: whitesmoke;
+  padding: 50px 0;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.cardList {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.searchInput {
+  width: 70%;
+}
+
+.spinnerWrapper {
+  width: 100%;
 }

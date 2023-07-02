@@ -1,30 +1,41 @@
+/* eslint-disable no-debugger */
 import React, { Component } from 'react';
-import { Col, Row, Alert, Spin } from 'antd';
+import { Col, Row, Alert, Pagination } from 'antd';
 
 import Card from '../CardItem';
 import getMovies from '../../Api';
 import './CardList.css';
 
 const ERROR_MESSAGE = 'Connection Timeout, please check your internet connection';
-const IS_OFFLINE_MESSAGE = 'You are offline';
+const ERROR_SEARCH_RESULT = 'The search has not given any results';
 
 export default class CardList extends Component {
-  state = { movies: [], loading: true, error: false, isOnline: true };
+  state = { movies: [], error: false, isOnline: true, pageNum: 1 };
   keyIterator = 1;
 
-  createMovies() {
-    getMovies('return').then(
+  createMovies(pageNum = this.state.pageNum) {
+    const { searchValue, handleLoadChange } = this.props;
+    getMovies(searchValue, pageNum).then(
       (res) => {
-        this.setState({ movies: res.results, loading: false, error: false });
+        handleLoadChange();
+        if (!res.total_results) {
+          return this.setState({ error: true, errorText: ERROR_SEARCH_RESULT });
+        }
+        this.setState({ movies: res.results, totalResults: res.total_results, error: false });
       },
       (error) => {
-        this.setState({ error: true, loading: false, errorText: error.toString() });
+        handleLoadChange();
+        this.setState({ error: true, errorText: error.toString() });
       }
     );
   }
-
   handleNetworkChange = () => {
     this.setState((prevState) => ({ isOnline: !prevState.isOnline }));
+  };
+
+  paginationClicked = (value) => {
+    this.setState({ pageNum: value, movies: [] });
+    this.props.handleLoadChange(true);
   };
 
   componentDidMount() {
@@ -40,14 +51,18 @@ export default class CardList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const currentState = this.state;
+
+    if (prevState.pageNum !== currentState.pageNum) {
+      this.createMovies(currentState.pageNum);
+    }
+
     if (currentState.isOnline !== prevState.isOnline) {
       if (navigator.onLine) {
         this.createMovies();
       } else {
         this.setState({
           error: true,
-          loading: false,
-          errorText: IS_OFFLINE_MESSAGE,
+          errorText: ERROR_MESSAGE,
         });
       }
     }
@@ -56,7 +71,7 @@ export default class CardList extends Component {
   createMoviesCards(movies) {
     return (
       <ul className="cardList">
-        <Row gutter={[40, 40]}>
+        <Row gutter={[60, 30]}>
           {movies.map((item) => {
             return (
               <Col key={this.keyIterator++} span={12}>
@@ -70,18 +85,38 @@ export default class CardList extends Component {
   }
 
   render() {
-    const { movies, loading, error, errorText } = this.state;
+    const { movies, error, errorText, pageNum, totalResults } = this.state;
+    const { loading } = this.props;
+
     const errorStatus = error ? (
-      <Alert className="errorStatus" message={ERROR_MESSAGE} description={errorText} type="error" showIcon />
+      <Alert className="errorStatus" message={'Error'} description={errorText} type="error" showIcon />
     ) : null;
-    const loadingStatus = loading ? <Spin className="loadingStatus" size="large"></Spin> : null;
-    const content = !(loading || error) ? this.createMoviesCards(movies) : null;
+
+    const content = !error ? this.createMoviesCards(movies) : null;
+    const pagination = !(loading || error) ? (
+      <PaginationView paginationClicked={this.paginationClicked} pageNum={pageNum} totalResults={totalResults} />
+    ) : null;
     return (
       <>
-        {loadingStatus}
         {errorStatus}
         {content}
+        {pagination}
       </>
     );
   }
 }
+
+const PaginationView = (props) => {
+  const { paginationClicked, pageNum, totalResults } = props;
+  return (
+    <Pagination
+      className="block"
+      current={pageNum}
+      onChange={paginationClicked}
+      showSizeChanger={false}
+      showQuickJumper
+      total={totalResults}
+      pageSize={20}
+    />
+  );
+};

@@ -1,4 +1,4 @@
-const getMovies = async (search) => {
+const getMovies = async (search, pageNum) => {
   const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie';
   const options = {
     method: 'GET',
@@ -12,7 +12,7 @@ const getMovies = async (search) => {
     query: search,
     include_adult: false,
     language: 'en-US',
-    page: 1,
+    page: pageNum,
   }).toString();
 
   const response = await fetch(`${baseSearchUrl}?${searchParams}`, options);
