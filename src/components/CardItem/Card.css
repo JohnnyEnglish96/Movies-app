@@ -6,12 +6,74 @@
 .text {
   display: block;
   margin-top: 10px;
+  margin-right: 0;
   width: calc(100% - 10px);
+  height: 110px;
+  overflow-y: hidden;
 }
 
 .title {
   margin: 0 !important;
   padding-bottom: 5px;
+  width: 85%;
+}
+
+.title-vote {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.popularity {
+  text-align: center;
+  vertical-align: baseline;
+  width: 40px;
+  position: relative;
+  margin-top: 5px;
+}
+
+.popularity.lessThree::after {
+  content: '';
+  border: 2px solid #E90000;
+  border-radius: 50%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 0;
+  top: -7px;
+}
+
+.popularity.lessFive::after {
+  content: '';
+  border: 2px solid #E97E00;
+  border-radius: 50%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 0;
+  top: -7px;
+}
+
+.popularity.lessSeven::after {
+  content: '';
+  border: 2px solid #66E900;
+  border-radius: 50%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 0;
+  top: -7px;
+}
+
+.popularity.moreSeven::after {
+  content: '';
+  border: 2px solid #E9D100;
+  border-radius: 50%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 0;
+  top: -7px;
 }
 
 .secondary {
@@ -25,7 +87,7 @@
 
 .card div:first-child {
   box-sizing: border-box !important;
-  padding: 0 !important;
+  padding: 0;
   height: 100%;
   align-items: flex-start;
 }
@@ -35,15 +97,25 @@
   height: inherit !important;
 }
 
-.content {
-  padding: 20px !important;
-}
-
-.space div:last-child {
-  padding: 10px;
-}
-
 .ant-image-mask-info {
   align-items: center !important;
   display: flex !important;
+}
+
+.content {
+  padding: 10px 10px 0 10px !important;
+  position: relative;
+  min-height: 260px;
+  width: 290px;
+  overflow-y: hidden;
+}
+
+.rate {
+  position: absolute;
+  bottom: 15px;
+}
+
+.genreList {
+  overflow-x: hidden;
+  white-space: nowrap;
 }
