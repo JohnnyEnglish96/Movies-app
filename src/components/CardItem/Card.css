@@ -1,121 +1,139 @@
+.ant-card-body {
+  box-sizing: border-box !important;
+  padding: 0 5px 10px 10px !important; 
+  height: 260px;
+  display: grid;
+  gap: 7px 13px;
+  justify-content: start;
+  grid-template-rows: 45px 20px 25px auto 1fr;
+  font-size: 16px;
+  grid-template-columns: 60px 1fr 40px;
+  grid-template-areas:
+    'img title popularity'
+    'img date popularity'
+    'img genres genres'
+    'overview overview overview'
+    'rating rating rating'
+}
+
+.ant-card {
+  width: 100%;
+  min-width: 400px;
+}
+
+.img {
+  grid-area: img;
+  padding-top: 10px ;
+  width: 60px;
+  height: 90px;
+}
+
+.title {
+  grid-area: title;
+  font-weight: 500;
+  margin: 10px 0 0;
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.popularity {
+  grid-area: popularity;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 3px 0 0;
+  width: 35px;
+  height: 35px;
+  border: 2px solid;
+  border-radius: 50%;
+}
+
+.date {
+  grid-area: date;
+  line-height: 22px;
+  margin: 0;
+}
+
+.genres {
+  display: flex;
+  margin: 0;
+  grid-area: genres;
+  gap: 5px;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.genres::-webkit-scrollbar {
+  display: none;
+}
+
+.overview {
+  grid-area: overview;
+  margin: 0;
+  padding-right: 20px;
+  line-height: 22px;
+}
+
+.rating {
+  grid-area: rating;
+  margin: 0 auto;
+  align-self: end;
+}
+
 .link {
   color: black !important;
   font-size: 13px;
 }
 
-.text {
-  display: block;
-  margin-top: 10px;
-  margin-right: 0;
-  width: calc(100% - 10px);
-  height: 110px;
-  overflow-y: hidden;
+.popularity.lessThree {
+  border-color: #E90000;
 }
 
-.title {
-  margin: 0 !important;
-  padding-bottom: 5px;
-  width: 85%;
+.popularity.lessFive {
+  border-color: #E97E00;
 }
 
-.title-vote {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
+.popularity.lessSeven {
+  border-color: #E9D100;
 }
 
-.popularity {
-  text-align: center;
-  vertical-align: baseline;
-  width: 40px;
-  position: relative;
-  margin-top: 5px;
+.popularity.moreSeven {
+  border-color: #66E900;
 }
 
-.popularity.lessThree::after {
-  content: '';
-  border: 2px solid #E90000;
-  border-radius: 50%;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 0;
-  top: -7px;
-}
 
-.popularity.lessFive::after {
-  content: '';
-  border: 2px solid #E97E00;
-  border-radius: 50%;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 0;
-  top: -7px;
-}
+@media (min-width: 1010px) {
+  .ant-card {
+    width: 470px;
+    height: 260px;
+  }
+  .ant-card-body {
+    gap: 8px 15px;
+    font-size: 14px;
+    padding: 0 !important;
+    grid-template-columns: 183px 1fr 40px;
+    grid-template-rows: auto 20px 25px auto auto;
+    grid-template-areas:
+      'img title popularity'
+      'img date popularity'
+      'img genres genres'
+      'img overview overview'
+      'img rating rating'
+  }
+  .img {
+    padding-top: 0;
+    grid-area: img;
+    width: 183px;
+    height: 260px;
+  }
+  .rating {
+    grid-area: rating;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    align-self: end;
+  }
+  .title {
+    font-size: 20px;
+  }
 
-.popularity.lessSeven::after {
-  content: '';
-  border: 2px solid #66E900;
-  border-radius: 50%;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 0;
-  top: -7px;
-}
-
-.popularity.moreSeven::after {
-  content: '';
-  border: 2px solid #E9D100;
-  border-radius: 50%;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 0;
-  top: -7px;
-}
-
-.secondary {
-  margin-bottom: 5px !important;
-  display: block;
-}
-
-.card {
-  box-sizing: border-box !important;
-}
-
-.card div:first-child {
-  box-sizing: border-box !important;
-  padding: 0;
-  height: 100%;
-  align-items: flex-start;
-}
-
-.ant-image-img {
-  object-fit: cover;
-  height: inherit !important;
-}
-
-.ant-image-mask-info {
-  align-items: center !important;
-  display: flex !important;
-}
-
-.content {
-  padding: 10px 10px 0 10px !important;
-  position: relative;
-  min-height: 260px;
-  width: 290px;
-  overflow-y: hidden;
-}
-
-.rate {
-  position: absolute;
-  bottom: 15px;
-}
-
-.genreList {
-  overflow-x: hidden;
-  white-space: nowrap;
 }

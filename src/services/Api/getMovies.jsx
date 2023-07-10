@@ -7,27 +7,23 @@ const api_key = '175ede1b914f63d9714bb7e7a7b11234';
 
 const baseGetOptions = {
   method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzVlZGUxYjkxNGY2M2Q5NzE0YmI3ZTdhN2IxMTIzNCIsInN1YiI6IjY0OTk2Y2Q1YjM0NDA5MDEzOTg1M2JlZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.O6706KTvrZuz9GS-QPCSx-yf4b2ZOsyeCmT4-9VdPKc',
-  },
 };
 
 const createGuestSession = async () => {
-  const response = await fetch(baseGuestUrl, baseGetOptions);
+  const response = await fetch(`${baseGuestUrl}?api_key=${api_key}`, baseGetOptions);
   if (!response.ok) throw new Error(`Response Error ${response.status}`);
   return await response.json();
 };
 
 const getGenresList = async () => {
-  const response = await fetch(baseGenresUrl, baseGetOptions);
+  const response = await fetch(`${baseGenresUrl}?api_key=${api_key}`, baseGetOptions);
   if (!response.ok) throw new Error(`Response Error ${response.status}`);
   return await response.json();
 };
 
 const getMovies = async (search, pageNum) => {
   const searchParams = new URLSearchParams({
+    api_key: api_key,
     query: search,
     include_adult: false,
     language: 'en-US',

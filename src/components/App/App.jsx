@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { Component } from 'react';
 import { Input, Spin, Tabs, Alert } from 'antd';
 import { debounce } from 'lodash';

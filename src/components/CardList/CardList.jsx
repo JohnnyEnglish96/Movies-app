@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Alert, Pagination } from 'antd';
+import { Alert, Pagination } from 'antd';
 
 import Card from '../CardItem';
 import getMovies, { getRatingMovies } from '../../services/Api';
@@ -10,7 +10,16 @@ const ERROR_SEARCH_RESULT = 'The search has not given any results';
 const ERROR_RATED_MOVIE_RESULT = 'There are no rated movies';
 
 export default class CardList extends Component {
-  state = { movies: [], error: false, isOnline: true, pageNum: 1 };
+  state = {
+    movies: [],
+    error: false,
+    isOnline: true,
+    pageNum: 1,
+    firstCall: false,
+    noMovies: false,
+    totalResults: 0,
+    pageTrigger: false,
+  };
   keyIterator = 1;
 
   getMovies = (pageNum = this.state.pageNum, pageTrigger = false) => {
@@ -94,12 +103,12 @@ export default class CardList extends Component {
     const { firstCall } = this.state;
     this.setState({ pageNum: value, pageTrigger: false });
     this.props.handleLoadChange(true);
-    if (!searchTub) {
+    if (searchTub) {
       if (firstCall) {
         return;
       }
       this.setState({ firstCall: true });
-      return this.getRatingMovies(false, value);
+      return this.getMovies(value);
     }
   };
 
@@ -135,6 +144,7 @@ export default class CardList extends Component {
 
     if (currentState.isOnline !== prevState.isOnline) {
       if (navigator.onLine) {
+        this.props.handleLoadChange(true);
         this.getMovies();
       } else {
         this.setState({
@@ -148,19 +158,16 @@ export default class CardList extends Component {
   createMoviesCards(movies) {
     return (
       <ul className="cardList">
-        <Row gutter={[60, 30]}>
-          {movies.map((item) => {
-            return (
-              <Col key={this.keyIterator++} span={12}>
-                <Card
-                  searchResult={item}
-                  handleRateChange={this.handleRateChange}
-                  baseImgUrl={'https://image.tmdb.org/t/p/original'}
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        {movies.map((item) => {
+          return (
+            <Card
+              key={this.keyIterator++}
+              searchResult={item}
+              handleRateChange={this.handleRateChange}
+              baseImgUrl={'https://image.tmdb.org/t/p/original'}
+            />
+          );
+        })}
       </ul>
     );
   }

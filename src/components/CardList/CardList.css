@@ -1,11 +1,28 @@
 .cardList {
-  margin: 0 auto;
-  width: calc(100% - 200px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 38px;
 }
-
 .errorStatus {
   width: 60%;
   margin: 0 auto;
 }
 
+
+@media (min-width: 1010px) {
+  .cardList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+@media (min-width: 1035px) {
+  .cardList {
+    gap: 35px;
+  }
+}
 

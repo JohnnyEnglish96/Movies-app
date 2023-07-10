@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Card, Typography, Image, Space, Rate } from 'antd';
+import { Card, Typography, Rate } from 'antd';
 import { format } from 'date-fns';
 
 import { Consumer } from '../../services/context/context.jsx';
 import './Card.css';
 
-const MAX_OVERVIEW_LENGTH = 180;
-const MAX_TITLE_LENGTH = 13;
+const MAX_OVERVIEW_LENGTH = 170;
+const MAX_TITLE_LENGTH = 10;
 const NO_RELEASE_DATE = 'Unknow realease date';
 const NO_OVERVIEW_TEXT = 'No description';
 const NO_IMAGE_URL =
@@ -42,7 +42,7 @@ export default class CardItem extends Component {
   }
 
   render() {
-    const { Title, Text, Link } = Typography;
+    const { Text, Link } = Typography;
     const { searchResult, baseImgUrl } = this.props;
     const { original_title, overview, poster_path, release_date, id, genre_ids, rating } = searchResult;
     const { voteAvrgClassName, voteAvrg } = this.state;
@@ -64,51 +64,50 @@ export default class CardItem extends Component {
       <Consumer>
         {({ state: { genreList, guestId }, handleRateChange }) => {
           return (
-            <Card
-              className="card"
-              hoverable
-              style={{
-                width: 470,
-                height: 260,
-              }}
-            >
-              <Space className="space">
-                <PostImage poster_path={poster_path} baseImgUrl={baseImgUrl} />
-                <div className="content">
-                  <div className="title-vote">
-                    <Title className="title" level={4}>
-                      {original_title}
-                    </Title>
-                    <p className={`popularity ${voteAvrgClassName}`}>{voteAvrg}</p>
-                  </div>
+            <Card hoverable>
+              <img className="img" src={poster_path ? `${baseImgUrl}${poster_path}` : NO_IMAGE_URL} />
 
-                  <Text className="secondary" type="secondary">
-                    {date}
+              <h2 className="title">{splicedOverview(original_title, MAX_TITLE_LENGTH)}</h2>
+
+              <p className="date" type="secondary">
+                {date}
+              </p>
+
+              <div className={`popularity ${voteAvrgClassName}`}>
+                <p>{voteAvrg}</p>
+              </div>
+
+              <ul className="genres">
+                {genre_ids.length ? (
+                  showGenre(genreList, genre_ids).map((item) => {
+                    return (
+                      <Text code key={this.keyIterator++}>
+                        <Link href="#" className="link">
+                          {genre_ids.length ? item.name : 'Unknow'}
+                        </Link>
+                      </Text>
+                    );
+                  })
+                ) : (
+                  <Text code>
+                    <Link href="#" className="link">
+                      Unknow
+                    </Link>
                   </Text>
-                  <ul className="genreList">
-                    {showGenre(genreList, genre_ids).map((item) => {
-                      return (
-                        <Text code key={this.keyIterator++}>
-                          <Link href="#" className="link">
-                            {item.name || 'Unknow'}
-                          </Link>
-                        </Text>
-                      );
-                    })}
-                  </ul>
-                  <Text className="text">
-                    {overview ? splicedOverview(overview, original_title) : NO_OVERVIEW_TEXT}
-                  </Text>
-                  <div className="rate">
-                    <Rate
-                      allowHalf
-                      defaultValue={rating}
-                      count={10}
-                      onChange={(value) => handleRateChange(guestId, value, id)}
-                    />
-                  </div>
-                </div>
-              </Space>
+                )}
+              </ul>
+              <Text className="overview">
+                {overview ? splicedOverview(overview, MAX_OVERVIEW_LENGTH) : NO_OVERVIEW_TEXT}
+              </Text>
+              <div className="rating">
+                <Rate
+                  style={{ fontSize: 18 }}
+                  allowHalf
+                  defaultValue={rating}
+                  count={10}
+                  onChange={(value) => handleRateChange(guestId, value, id)}
+                />
+              </div>
             </Card>
           );
         }}
@@ -117,21 +116,10 @@ export default class CardItem extends Component {
   }
 }
 
-const PostImage = (prop) => {
-  const { poster_path, baseImgUrl } = prop;
-  if (!poster_path) {
-    return <Image fallback={NO_IMAGE_URL} src="error" width={170} />;
-  }
-  return <Image src={`${baseImgUrl}${poster_path}`} width={170} />;
-};
-
-const splicedOverview = (text, title) => {
+const splicedOverview = (text, lengthValue) => {
   let shortenText;
-  if (text.length > MAX_OVERVIEW_LENGTH) {
-    shortenText = text.slice(0, MAX_OVERVIEW_LENGTH).split(' ');
-  }
-  if (title.length > MAX_TITLE_LENGTH) {
-    shortenText = text.slice(0, 50).split(' ');
+  if (text.length > lengthValue) {
+    shortenText = text.slice(0, lengthValue).split(' ');
   }
   return shortenText ? `${shortenText.join(' ')}...` : text;
 };
