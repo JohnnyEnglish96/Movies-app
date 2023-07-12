@@ -3,8 +3,8 @@ import { Input, Spin, Tabs, Alert } from 'antd';
 import { debounce } from 'lodash';
 
 import CardList from '../CardList';
-import { createGuestSession, makeRating, getGenresList } from '../../services/Api';
-import { Provider } from '../../services/context/context';
+import { createGuestSession, makeRating, getGenresList } from '../../services/getMovies';
+import { Provider } from '../../context';
 import './App.css';
 
 const GUEST_SESSION_ERROR_TEXT = 'failed to get guest sesion id';
@@ -22,7 +22,7 @@ const tabButtons = [
   },
 ];
 
-export default class App extends Component {
+class App extends Component {
   state = {
     guestId: null,
     searchValue: null,
@@ -138,3 +138,5 @@ const SearchInput = (props) => {
     />
   );
 };
+
+export default App;

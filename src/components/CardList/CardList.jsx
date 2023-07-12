@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Alert, Pagination } from 'antd';
 
-import Card from '../CardItem';
-import getMovies, { getRatingMovies } from '../../services/Api';
+import CardItem from '../CardItem';
+import getMovies, { getRatingMovies } from '../../services/getMovies';
 import './CardList.css';
 
 const ERROR_INTERNET_MESSAGE = 'Connection Timeout, please check your internet connection';
 const ERROR_SEARCH_RESULT = 'The search has not given any results';
 const ERROR_RATED_MOVIE_RESULT = 'There are no rated movies';
 
-export default class CardList extends Component {
+class CardList extends Component {
   state = {
     movies: [],
     error: false,
@@ -160,7 +160,7 @@ export default class CardList extends Component {
       <ul className="cardList">
         {movies.map((item) => {
           return (
-            <Card
+            <CardItem
               key={this.keyIterator++}
               searchResult={item}
               handleRateChange={this.handleRateChange}
@@ -223,3 +223,5 @@ const PaginationView = (props) => {
     />
   );
 };
+
+export default CardList;
